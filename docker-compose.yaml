@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  saaya:
+    build: .
+    ports:
+      - 5700:5700
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command:  
+      - /bin/sh
+      - -c
+      - |
+        cd cqhttp
+        chmod a+x go-cqhttp
+        ./go-cqhttp &
+        cd ..
+        python main.py
