@@ -20,7 +20,7 @@ class Bot:
                 self.processor(msg)
 
         async def main():
-            async with websockets.serve(getMsg, self.addr, self.ws_port) as ws:
+            async with websockets.serve(getMsg, "0.0.0.0", self.ws_port) as ws:
                 await asyncio.Future()
 
         asyncio.run(main())
