@@ -12,5 +12,7 @@ def hello(event: Message):
             msg = event.data["raw_message"].split("/echo")[1]
         except:
             msg = "fuck"
+        if msg == "":
+            msg = "fuck"
         ms = MsgSender('group', target, msg)
         ms.send()
