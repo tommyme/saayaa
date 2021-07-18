@@ -33,8 +33,17 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 
 ### 快速使用（for old_driver）
 
-1. 创建private.py并且写入qq  passwd  authKey
+1. 创建private.py
+
+   ```python
+   qq = 12345678
+   passwd = "12345678"
+   authKey = "12345678"
+   admin = [12345678]  # 用户权限相关，会附加在finger_Print上
+   ```
+
 2. 运行config.py
+
 3. 运行代码：
 
 ```
@@ -50,12 +59,26 @@ docker-compose up -d
    4. request包括 新朋友 和 进群邀请
    5. 后续会逐渐增加
 
-1. fingerprint（指纹）
+2. fingerprint（指纹）
    1. 指纹是什么
+      
       1. 指纹用于标识事件类型，插件根据这个类型来进行处理
+      
    2. 三级指纹是什么
       1. 三级指纹是目前的指纹系统，目前最长的指纹只有三级 e.g. : message.private.admin
       2. 高等级的指纹可以去执行低等级指纹的任务
          1. message.private.admin 可以执行 message.private 和 message
-   3. 目前打算实现的指纹位于fingerprint.py中
+      
+   3. 目前打算实现的指纹
+
+      ```python
+      "message.private",
+      "message.group",
+      "notice.group_upload",
+      "notice.group_decrease",
+      "notice.group_increase",
+      "request.friend",
+      "request.group"
+      
+      ```
 2. ...待补充...

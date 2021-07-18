@@ -1,6 +1,7 @@
 import requests as r
-from config import base_url, data
+from saaya.info import info
 from saaya.logger import logger
+from private import authKey
 
 
 class MsgSender:
@@ -14,12 +15,12 @@ class MsgSender:
     def send(self):
         xx_id = "user_id" if self.type.startswith("p") else "group_id"
         params = {
-            "access_token": data['authKey'],
+            "access_token": authKey,
             xx_id: self.target,
             "message": self.content
         }
-        logger.debug(base_url+self.terminal, params)
-        r.get(base_url+self.terminal, params=params)
+        logger.debug(info.base_url+self.terminal, params)
+        r.get(info.base_url+self.terminal, params=params)
 
     def At(qq: list):
         return ''.join([f"[CQ:at,qq={i}]" for i in qq])

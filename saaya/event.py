@@ -1,5 +1,5 @@
 # Event,Message,Notice,Request,Unknown
-from config import admin
+from private import admin
 
 
 class Event:

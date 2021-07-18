@@ -1,2 +1,0 @@
-def privileged(f):
-    pass

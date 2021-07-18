@@ -6,11 +6,11 @@ from saaya.event import Message, Notice, Request, Unknown
 import json
 from saaya.pluginManager import PluginManager
 from saaya.logger import logger
+from saaya.info import info
 
 
 class Bot:
-    def __init__(self, data):
-        self.__dict__.update(data)
+    def __init__(self):
         logger.info('Bot initialized.')
 
     def loop(self):
@@ -22,7 +22,7 @@ class Bot:
                 self.processor(msg)
 
         async def main():
-            async with websockets.serve(getMsg, "0.0.0.0", self.ws_port) as ws:
+            async with websockets.serve(getMsg, info.ws_addr, info.ws_port) as ws:
                 await asyncio.Future()
 
         asyncio.run(main())
