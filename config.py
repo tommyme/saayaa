@@ -5,6 +5,7 @@ data = {"addr": "localhost",
         "authKey": authKey,
         "botqq": qq}
 base_url = f"http://{data['addr']}:{data['port']}"
+admin = [2756456886]  # 用户权限相关，会附加在finger_Print上
 
 
 if __name__ == "__main__":

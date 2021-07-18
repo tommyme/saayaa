@@ -3,6 +3,8 @@ data/
 logs/
 device.json
 config.hjson
+config.yml
+session.token
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

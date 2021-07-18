@@ -1,5 +1,6 @@
 import requests as r
 from config import base_url, data
+from saaya.logger import logger
 
 
 class MsgSender:
@@ -17,5 +18,13 @@ class MsgSender:
             xx_id: self.target,
             "message": self.content
         }
-        print(base_url+self.terminal, params)
+        logger.debug(base_url+self.terminal, params)
         r.get(base_url+self.terminal, params=params)
+
+    def At(qq: list):
+        return ''.join([f"[CQ:at,qq={i}]" for i in qq])
+
+    def pic(url: str):
+        # [CQ:image,file=http://baidu.com/1.jpg]
+        # [CQ:image,file=file:///...]
+        return f"[CQ:image,file={url}]"

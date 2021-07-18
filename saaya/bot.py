@@ -1,18 +1,20 @@
 import asyncio
+import logging
 import websockets
 from collections import defaultdict as ddict
 from saaya.event import Message, Notice, Request, Unknown
 import json
 from saaya.pluginManager import PluginManager
+from saaya.logger import logger
 
 
 class Bot:
     def __init__(self, data):
         self.__dict__.update(data)
-        print('Bot initialized.')
+        logger.info('Bot initialized.')
 
     def loop(self):
-        print("start Loop!")
+        logger.info("start Loop!")
 
         async def getMsg(websocket, path):
             while 1:
@@ -33,21 +35,22 @@ class Bot:
             "request": Request
         }, Unknown
         event = switch.get(msg['post_type'], default)(msg)
-        print(event.fingerprint) if not event.fingerprint.startswith("u") else None
+        logger.debug(event.fingerprint) if not event.fingerprint.startswith(
+            "u") else None
         PluginManager.broadCast(event)
 
     def registerPlugins(self, plugins: list):
         for plugin in plugins:
-            print(f'Loading plugin: {plugin}')
+            logger.info(f'Loading plugin: {plugin}')
             try:
                 __import__(plugin)
             except Exception as e:
-                print(e)
+                logger.error(e)
 
         # 处理 OnLoad
         for func in PluginManager.plugins['OnLoad']:
             try:
-                print(f'Calling OnLoad func from {func}')
+                logger.debug(f'Calling OnLoad func from {func}')
                 func(self)
             except Exception as e:
-                print(e)
+                logger.error(e)

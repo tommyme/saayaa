@@ -1,4 +1,7 @@
 # Event,Message,Notice,Request,Unknown
+from config import admin
+
+
 class Event:
     def __init__(self, base_type, data) -> None:
         self.type = data[base_type+"_type"]
@@ -10,7 +13,9 @@ class Message(Event):
     def __init__(self, data) -> None:
         super().__init__("message", data)
 
-        self.sender = data['sender']
+        self.sender_id = data['sender']['user_id']
+        if self.sender_id in admin:
+            self.fingerprint += ".admin"
 
 
 class Notice(Event):
