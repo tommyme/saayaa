@@ -36,12 +36,10 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 1. 创建private.py
 
    ```python
-   qq = 12345678
-   passwd = "12345678"
    authKey = "12345678"
    admin = [12345678]  # 用户权限相关，会附加在finger_Print上
    ```
-
+   
 2. 运行config.py
 
 3. 运行代码：
