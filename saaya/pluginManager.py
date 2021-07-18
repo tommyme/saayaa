@@ -26,7 +26,9 @@ class BaseManager:
         fps = FingerPrints(origin_fp)
         for fp in fps:
             if self.plugins[fp] != 0:
-                [plugin(event) for plugin in self.plugins[fp]]
+                for plugin in self.plugins[fp]:
+                    logger.debug("func check: "+str(plugin))
+                    plugin(event)
 
     def registerEvent(self, fingerprint: str):
         def plugin(func):

@@ -1,3 +1,8 @@
 requests
 websockets
 colorlog
+
+#以下为我个人需要
+pillow
+lxml
+ybwnb

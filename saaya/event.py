@@ -14,8 +14,17 @@ class Message(Event):
         super().__init__("message", data)
 
         self.sender_id = data['sender']['user_id']
+        self.group_id = data['group_id']  # 如果不存在的话就是‘unknown’
+        self.msg = data["raw_message"]
+
         if self.sender_id in admin:
             self.fingerprint += ".admin"
+
+    def back(self, content):
+        from saaya.func.msg import MsgSender
+        Type = 'private' if 'private' in self.fingerprint else 'group'
+        sender = self.sender_id if Type == 'private' else self.group_id
+        MsgSender(Type, sender, content).send()
 
 
 class Notice(Event):

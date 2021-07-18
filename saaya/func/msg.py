@@ -4,6 +4,17 @@ from saaya.logger import logger
 from private import authKey
 
 
+class Msg:
+
+    def At(qq: list):
+        return ''.join([f"[CQ:at,qq={i}]" for i in qq])
+
+    def pic(url: str):
+        # [CQ:image,file=http://baidu.com/1.jpg]
+        # [CQ:image,file=file:///...]
+        return f"[CQ:image,file={url}]"
+
+
 class MsgSender:
     def __init__(self, type, target, content) -> None:
         assert(type in ["private", "group"])
@@ -21,11 +32,3 @@ class MsgSender:
         }
         logger.debug(info.base_url+self.terminal, params)
         r.get(info.base_url+self.terminal, params=params)
-
-    def At(qq: list):
-        return ''.join([f"[CQ:at,qq={i}]" for i in qq])
-
-    def pic(url: str):
-        # [CQ:image,file=http://baidu.com/1.jpg]
-        # [CQ:image,file=file:///...]
-        return f"[CQ:image,file={url}]"
