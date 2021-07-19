@@ -16,7 +16,7 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 
 - [x] logger（彩色）
 - [x]  @和pic消息类型支持
-- [x] 版本适配 -- [v1.0.0-beta4
+- [x] 版本适配 -- [v1.0.0-beta4](https://github.com/Mrs4s/go-cqhttp/releases/tag/v1.0.0-beta4)
 - [x] 权限管理
 - [x] 三级指纹事件处理
 - [ ] 异步支持
@@ -40,8 +40,6 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
    admin = [12345678]  # 用户权限相关，会附加在finger_Print上
    ```
    
-2. 运行config.py
-
 3. 运行代码：
 
 ```
