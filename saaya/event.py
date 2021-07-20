@@ -21,10 +21,10 @@ class Message(Event):
             self.fingerprint += ".admin"
 
     def back(self, content):
-        from saaya.func.msg import MsgSender
+        from saaya.helper import MsgHelper
         p = True if 'private' in self.fingerprint else False
         sender = self.sender_id if p else self.group_id
-        MsgSender(p, sender, content).send()
+        MsgHelper(p, sender, content).send()
 
 
 class Notice(Event):
@@ -41,6 +41,12 @@ class Notice(Event):
 class Request(Event):
     def __init__(self, data) -> None:
         super().__init__("request", data)
+
+    def info_new_friend(self):
+        return self.data['user_id'], self.data['comment'], self.data['flag']
+
+    def info_new_member(self):
+        pass
 
 
 class Unknown(Event):

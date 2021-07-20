@@ -12,3 +12,11 @@ class groupHelper:
             "card": card
         }
         get('/set_group_card', params)
+
+    def mute(self, target, min=30):
+        params = {
+            "group_id": self.gid,
+            "user_id": target,
+            "duration": min*60
+        }
+        get("/set_group_ban", params)

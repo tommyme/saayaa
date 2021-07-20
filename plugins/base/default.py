@@ -1,7 +1,5 @@
 from saaya.pluginManager import PluginManager
 from saaya.event import Message
-from saaya.func.msg import MsgSender
-from saaya.logger import logger
 
 
 @PluginManager.registerEvent('message.group.admin')
