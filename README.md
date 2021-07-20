@@ -73,6 +73,7 @@ docker-compose up -d
       "notice.group_upload",
       "notice.group_decrease",
       "notice.group_increase",
+      "notice.group_card",
       "request.friend",
       "request.group"
       

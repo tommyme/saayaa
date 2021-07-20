@@ -22,14 +22,20 @@ class Message(Event):
 
     def back(self, content):
         from saaya.func.msg import MsgSender
-        Type = 'private' if 'private' in self.fingerprint else 'group'
-        sender = self.sender_id if Type == 'private' else self.group_id
-        MsgSender(Type, sender, content).send()
+        p = True if 'private' in self.fingerprint else False
+        sender = self.sender_id if p else self.group_id
+        MsgSender(p, sender, content).send()
 
 
 class Notice(Event):
     def __init__(self, data) -> None:
         super().__init__("notice", data)
+
+    def get_id(self):
+        try:
+            return self.data["group_id"], self.data['user_id']
+        except:
+            return 0, 0
 
 
 class Request(Event):

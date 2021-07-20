@@ -1,7 +1,4 @@
-import requests as r
-from saaya.info import info
-from saaya.logger import logger
-from private import authKey
+from .utils import get
 
 
 class Msg:
@@ -16,9 +13,8 @@ class Msg:
 
 
 class MsgSender:
-    def __init__(self, type, target, content) -> None:
-        assert(type in ["private", "group"])
-        self.type = type
+    def __init__(self, private: bool, target, content) -> None:
+        self.type = "private" if private else "group"
         self.terminal = f"/send_{self.type}_msg"
         self.content = content
         self.target = target
@@ -26,9 +22,7 @@ class MsgSender:
     def send(self):
         xx_id = "user_id" if self.type.startswith("p") else "group_id"
         params = {
-            "access_token": authKey,
             xx_id: self.target,
             "message": self.content
         }
-        logger.debug(info.base_url+self.terminal, params)
-        r.get(info.base_url+self.terminal, params=params)
+        get(self.terminal, params)
