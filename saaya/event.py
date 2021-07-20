@@ -1,5 +1,5 @@
 # Event,Message,Notice,Request,Unknown
-from private import admin
+from saaya.utils import config
 
 
 class Event:
@@ -17,8 +17,10 @@ class Message(Event):
         self.group_id = data['group_id']  # 如果不存在的话就是‘unknown’
         self.msg = data["raw_message"]
 
-        if self.sender_id in admin:
+        if self.sender_id in config.admin:
             self.fingerprint += ".admin"
+        if self.sender_id == config.master:
+            self.fingerprint += ".master"
 
     def back(self, content):
         from saaya.helper import MsgHelper

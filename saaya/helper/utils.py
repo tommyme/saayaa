@@ -1,6 +1,6 @@
 import requests as r
 from saaya.info import info
-from private import authKey
+from saaya.utils import config
 from collections import defaultdict as ddict
 from saaya.logger import logger
 
@@ -24,7 +24,7 @@ def get(terminal, params):
     params = ddict(lambda: 0, params)
     url = info.base_url+terminal
     if params['access_token'] == 0:
-        params["access_token"] = authKey
+        params["access_token"] = config.authKey
     if not terminal.startswith('/'):
         logger.error("terminal must be like '/xxxx' !!!")
     logger.debug(url)

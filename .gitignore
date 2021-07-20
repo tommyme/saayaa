@@ -15,7 +15,7 @@ __pycache__/
 *$py.class
 server.py
 .idea
-private.py
+private.*
 # C extensions
 *.so
 
