@@ -3,6 +3,7 @@ from saaya.event import Event
 from collections import defaultdict as ddict
 from saaya.logger import logger
 from saaya.utils import FingerPrints
+import asyncio
 
 
 class BaseManager:
@@ -15,7 +16,7 @@ class BaseManager:
         # 这里一般使用'指纹'来添加事件类型
         # 你也可以手动添加事件类型，比如'Onload'
 
-    def broadCast(self, event: Event):
+    async def broadCast(self, event: Event):
         """
         拥有'aaa.bbb.admin'指纹的event
         会先找对应的'aaa.bbb.admin'类型
@@ -24,11 +25,13 @@ class BaseManager:
         """
         origin_fp = event.fingerprint
         fps = FingerPrints(origin_fp)
+        task_list = []
         for fp in fps:
             if self.plugins[fp] != 0:
                 for plugin in self.plugins[fp]:
-                    logger.debug("func check: "+str(plugin))
-                    plugin(event)
+                    logger.debug("broadCast to: "+str(plugin))
+                    task_list.append(asyncio.create_task(plugin(event)))
+                await asyncio.wait(task_list)
 
     def registerEvent(self, fingerprint: str):
         def plugin(func):

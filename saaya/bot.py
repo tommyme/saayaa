@@ -19,7 +19,7 @@ class Bot:
         async def getMsg(websocket, path):
             while 1:
                 msg = await websocket.recv()
-                self.processor(msg)
+                await self.processor(msg)
 
         async def main():
             async with websockets.serve(getMsg, info.ws_addr, info.ws_port) as ws:
@@ -27,7 +27,7 @@ class Bot:
 
         asyncio.run(main())
 
-    def processor(self, msg):
+    async def processor(self, msg):
         msg = ddict(lambda: "unknown", json.loads(msg))
         switch, default = {
             "message": Message,
@@ -37,7 +37,7 @@ class Bot:
         event = switch.get(msg['post_type'], default)(msg)
         logger.debug(event.fingerprint) if not event.fingerprint.startswith(
             "u") else None
-        PluginManager.broadCast(event)
+        await PluginManager.broadCast(event)
 
     def registerPlugins(self, plugins: list):
         for plugin in plugins:

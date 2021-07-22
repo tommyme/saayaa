@@ -19,8 +19,8 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 - [x] 版本适配 -- [v1.0.0-beta4](https://github.com/Mrs4s/go-cqhttp/releases/tag/v1.0.0-beta4)
 - [x] 权限管理
 - [x] 三级指纹事件处理
-- [ ] 异步支持
-- [ ] nonebot迁移
+- [x] 异步支持
+- [x] nonebot迁移
 - [ ] saayaa通知板
 - [ ] 定时任务模块支持
 
@@ -33,11 +33,19 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 
 ### 快速使用（for old_driver）
 
-1. 创建private.py
+1. 创建private.json
 
    ```python
-   authKey = "12345678"
-   admin = [12345678]  # 用户权限相关，会附加在finger_Print上
+   {
+       "authKey": "1234567890",
+       "master": 12345689,
+       "admin": [
+           1234567,
+           1256,
+           123456789,
+           1234
+       ]
+   }
    ```
    
 3. 运行代码：
@@ -49,7 +57,7 @@ docker-compose up -d
 ### 框架概念
 
 1. Event（事件）
-   1. 目前打算实现三种事件类型（message notice request）这在fingerprint.py中就有体现
+   1. 目前打算实现三种事件类型（message notice request）
    2. message包括 private 私聊消息 和 group 群聊消息
    3. notice包括 群文件上传 群成员增加/减少
    4. request包括 新朋友 和 进群邀请
@@ -60,8 +68,8 @@ docker-compose up -d
       
       1. 指纹用于标识事件类型，插件根据这个类型来进行处理
       
-   2. 三级指纹是什么
-      1. 三级指纹是目前的指纹系统，目前最长的指纹只有三级 e.g. : message.private.admin
+   2. n级指纹是什么
+      1. n级指纹是目前的指纹系统，目前最长的指纹只有四级 e.g. : message.private.admin.master
       2. 高等级的指纹可以去执行低等级指纹的任务
          1. message.private.admin 可以执行 message.private 和 message
       
