@@ -17,3 +17,6 @@ class requestHelper:
             "sub_type": sub_type
         }
         get("/set_group_add_request", params)
+    
+    def chehui(msg_id):
+        get("/delete_msg", {"message_id":msg_id})

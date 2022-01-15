@@ -16,17 +16,24 @@ class Message(Event):
         self.sender_id = data['sender']['user_id']
         self.group_id = data['group_id']  # 如果不存在的话就是‘unknown’
         self.msg = data["raw_message"]
+        self.message_id = data['message_id']
+        self.message = data['message']
 
         if self.sender_id in config.admin:
             self.fingerprint += ".admin"
         if self.sender_id == config.master:
             self.fingerprint += ".master"
 
-    def back(self, content):
+    def back(self, content, reply=False):
         from saaya.helper import MsgHelper
         p = True if 'private' in self.fingerprint else False
         sender = self.sender_id if p else self.group_id
+        content = f"[CQ:reply,id={self.message_id}]{content}" if reply else content
         MsgHelper(p, sender, content).send()
+    
+    def delete(self):
+        from saaya.helper.request import requestHelper
+        requestHelper.chehui(self.message_id)
 
 
 class Notice(Event):

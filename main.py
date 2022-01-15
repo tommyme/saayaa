@@ -6,6 +6,6 @@ if __name__ == '__main__':
     bot.registerPlugins([
         'plugins.base.default',
         'plugins.daily.main',
-        'plugins.test.main'
+        # 'plugins.test.main'
     ])
     bot.loop()  # 开始监听事件循环

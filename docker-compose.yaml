@@ -16,4 +16,4 @@ services:
         chmod a+x go-cqhttp
         ./go-cqhttp faststart &
         cd ..
-        python main.py
+        python3 main.py

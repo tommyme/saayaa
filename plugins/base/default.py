@@ -41,3 +41,18 @@ async def rm_admin(event: Message):
             event.back("removed")
         except:
             event.back('usage: rm_admin <uid>, uid must be num!')
+
+@PM.registerEvent('message.group')
+async def reply_me(event: Message):
+    if event.msg.startswith("reply"):
+        event.back("fuck you!",True)
+
+# @PM.registerEvent('message.group')
+# async def reply_me(event: Message):
+#     if event.msg.startswith("reply"):
+#         event.back("fuck you!",True)
+
+# @PM.registerEvent('message.group')
+# async def reply_me(event: Message):
+#     if "recall" in event.msg:
+#         event.delete()
