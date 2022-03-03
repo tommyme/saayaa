@@ -4,9 +4,9 @@ import websockets
 from collections import defaultdict as ddict
 from saaya.event import Message, Notice, Request, Unknown
 import json
-from saaya.pluginManager import PluginManager
+from saaya.plugin_manager import plugin_manager
 from saaya.logger import logger
-from saaya.info import info
+from saaya import config
 
 
 class Bot:
@@ -22,7 +22,7 @@ class Bot:
                 await self.processor(msg)
 
         async def main():
-            async with websockets.serve(getMsg, info.ws_addr, info.ws_port) as ws:
+            async with websockets.serve(getMsg, config.ws_addr, config.ws_port) as ws:
                 await asyncio.Future()
 
         asyncio.run(main())
@@ -37,9 +37,9 @@ class Bot:
         event = switch.get(msg['post_type'], default)(msg)
         logger.debug(event.fingerprint) if not event.fingerprint.startswith(
             "u") else None
-        await PluginManager.broadCast(event)
+        await plugin_manager.broadcast(event)
 
-    def registerPlugins(self, plugins: list):
+    def register_plugins(self, plugins: list):
         for plugin in plugins:
             logger.info(f'Loading plugin: {plugin}')
             try:
@@ -48,7 +48,7 @@ class Bot:
                 logger.error(e)
 
         # 处理 OnLoad
-        for func in PluginManager.plugins['OnLoad']:
+        for func in plugin_manager.plugins['OnLoad']:
             try:
                 logger.debug(f'Calling OnLoad func from {func}')
                 func(self)

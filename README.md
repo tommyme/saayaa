@@ -1,7 +1,5 @@
 ## saayaa -- 力求打造 简单 易上手 的机器人框架
 
-
-
 ### 简介
 
 #### **saayaa力求简单，核心代码目前只有150行左右**
@@ -15,7 +13,7 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 ### TODO_LIST
 
 - [x] logger（彩色）
-- [x]  @和pic消息类型支持
+- [x] @和pic消息类型支持
 - [x] 版本适配 -- [v1.0.0-beta4](https://github.com/Mrs4s/go-cqhttp/releases/tag/v1.0.0-beta4)
 - [x] 权限管理
 - [x] 三级指纹事件处理
@@ -34,7 +32,7 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
 ### 快速使用（for old_driver）
 
 1. 创建private.json
-
+   
    ```python
    {
        "authKey": "1234567890",
@@ -47,8 +45,8 @@ go-cqhttp有二维码登录功能，大大降低了登录难度。
        ]
    }
    ```
-   
-3. 运行代码：
+
+2. 运行代码：
 
 ```
 docker-compose up -d
@@ -57,6 +55,7 @@ docker-compose up -d
 ### 框架概念
 
 1. Event（事件）
+   
    1. 目前打算实现三种事件类型（message notice request）
    2. message包括 private 私聊消息 和 group 群聊消息
    3. notice包括 群文件上传 群成员增加/减少
@@ -64,17 +63,19 @@ docker-compose up -d
    5. 后续会逐渐增加
 
 2. fingerprint（指纹）
+   
    1. 指纹是什么
       
       1. 指纹用于标识事件类型，插件根据这个类型来进行处理
-      
+   
    2. n级指纹是什么
+      
       1. n级指纹是目前的指纹系统，目前最长的指纹只有四级 e.g. : message.private.admin.master
       2. 高等级的指纹可以去执行低等级指纹的任务
          1. message.private.admin 可以执行 message.private 和 message
-      
+   
    3. 目前打算实现的指纹
-
+      
       ```python
       "message.private",
       "message.group",
@@ -84,6 +85,10 @@ docker-compose up -d
       "notice.group_card",
       "request.friend",
       "request.group"
-      
       ```
-2. ...待补充...
+
+3. ...待补充...
+
+# 开发
+
+使用private.json而不是private.py是为了实时更改配置文件

@@ -1,45 +1,34 @@
 import json
+import requests as r
+from collections import defaultdict as ddict
+from saaya.logger import logger
+from saaya.config import config_mg
+import saaya.config as config
 
 
-def strip(fp):
-    return '.'.join(fp.split('.')[:-1])
+class Msg:
+
+    def At(qq: list):
+        return ''.join([f"[CQ:at,qq={i}]" for i in qq])
+
+    def pic(url: str):
+        # [CQ:image,file=http://baidu.com/1.jpg]
+        # [CQ:image,file=file:///...]
+        return f"[CQ:image,file={url}]"
 
 
-def FingerPrints(fp):
-    fps = []
-    while(fp != ''):
-        fps.append(fp)
-        fp = strip(fp)
-    return fps
-
-
-class Config:
-    def __init__(self) -> None:
-        self.root = 'private.json'
-        self.data = json.load(open(self.root, 'r'))
-        self.authKey = self.data["authKey"]
-        self.master = self.data['master']
-        self.admin = self.data["admin"]
-
-    def reload(self):
-        self.data = json.load(open(self.root, 'r'))
-        self.authKey = self.data["authKey"]
-        self.master = self.data['master']
-        self.admin = self.data["admin"]
-
-    def write(self):
-        json.dump(self.data, open(self.root, 'w'), indent=4)
-
-    def get_admin(self):
-        return str(self.admin)
-
-    def add_admin(self, uid: int):
-        self.data['admin'].append(uid)
-        self.write()
-
-    def rm_admin(self, uid: int):
-        self.data['admin'].remove(uid)
-        self.write()
-
-
-config = Config()
+def get(terminal, params):
+    """
+    add access_token to params
+    and put infos to logger
+    """
+    params = ddict(lambda: None, params)
+    url = config.base_url+terminal
+    if not params['access_token']:
+        params["access_token"] = config_mg.authKey
+    if not terminal.startswith('/'):
+        logger.error("terminal must be like '/xxxx' !!!")
+    logger.debug(url)
+    logger.debug(params)
+    status = str(r.get(url, params=params))
+    logger.debug(status)

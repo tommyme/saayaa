@@ -1,5 +1,5 @@
 # Event,Message,Notice,Request,Unknown
-from saaya.utils import config
+from saaya.config import config_mg
 
 
 class Event:
@@ -13,27 +13,27 @@ class Message(Event):
     def __init__(self, data) -> None:
         super().__init__("message", data)
 
-        self.sender_id = data['sender']['user_id']
-        self.group_id = data['group_id']  # 如果不存在的话就是‘unknown’
+        self.sender_id = data['sender']['user_id']  # int
+        self.group_id = data['group_id']  # 如果不存在的话就是'unknown'
         self.msg = data["raw_message"]
         self.message_id = data['message_id']
         self.message = data['message']
 
-        if self.sender_id in config.admin:
+        if self.sender_id in config_mg.admin:
             self.fingerprint += ".admin"
-        if self.sender_id == config.master:
+        if self.sender_id == config_mg.master:
             self.fingerprint += ".master"
 
     def back(self, content, reply=False):
-        from saaya.helper import MsgHelper
+        from saaya.action import Message_action
         p = True if 'private' in self.fingerprint else False
         sender = self.sender_id if p else self.group_id
         content = f"[CQ:reply,id={self.message_id}]{content}" if reply else content
-        MsgHelper(p, sender, content).send()
+        Message_action(p, sender, content).send()
     
     def delete(self):
-        from saaya.helper.request import requestHelper
-        requestHelper.chehui(self.message_id)
+        from saaya.action import Request_action
+        Request_action.chehui(self.message_id)
 
 
 class Notice(Event):
