@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y libzbar-dev # for my personal need
 COPY requirements.txt requirements.txt 
 
 RUN pip3 install -r requirements.txt -i https://pypi.mirrors.ustc.edu.cn/simple/ 
-
 WORKDIR /app
 
 COPY plugins/daily/souti0.txt /app/souti0.txt 
+RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone

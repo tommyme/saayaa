@@ -6,7 +6,8 @@ config.hjson
 config.yml
 session.token
 # myplugins
-daily/
+plugins/
+!plugins/base
 res.png
 download.jpg
 souti0.txt
