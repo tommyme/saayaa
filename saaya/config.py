@@ -17,7 +17,7 @@ class Config_manager:
         json.dump(self.data, open(self.root, 'w'), indent=4)
 
     def get_admin(self):
-        return str(self.admin)
+        return str(self.admin)[1:-1]
 
     def add_admin(self, uid: int):
         self.data['admin'].append(uid)

@@ -91,4 +91,4 @@ docker-compose up -d
 
 # 开发
 
-使用private.json而不是private.py是为了实时更改配置文件
+使用private.json而不是private.py是为了实时更改配置文件，但是也有改进的空间，比如说使用pickle或者sqlite
