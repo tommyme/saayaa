@@ -17,7 +17,7 @@ class Msg:
         return f"[CQ:image,file={url}]"
 
 
-def get(terminal, params):
+def get(terminal, params={}):
     """
     add access_token to params
     and put infos to logger
@@ -28,10 +28,9 @@ def get(terminal, params):
         params["access_token"] = config_mg.authKey
     if not terminal.startswith('/'):
         logger.error("terminal must be like '/xxxx' !!!")
-    logger.debug(url)
-    logger.debug(params)
-    status = str(r.get(url, params=params))
-    logger.debug(status)
+    resp = r.get(url, params=params)
+    logger.debug(f"[GET] {terminal} {str(resp)}")
+    return resp
 
 
 # i don't know how to add 2 decorators, it doesn't work well
@@ -48,3 +47,11 @@ def re_filter(pattern):
                 return coro_null() # return a null coroutine
         return wrapper
     return decorator
+
+class Bot_store:
+    def __init__(self):
+        self.bot = None
+
+bot_store = Bot_store()
+def get_bot():
+    return bot_store.bot

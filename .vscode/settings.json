@@ -1,0 +1,12 @@
+{
+    "files.exclude": {
+        "**/.*": true,
+        "**/__*": true,
+        "**/*.log": true,
+        "**/*.xmind": true,
+        "**/README.md": true,
+        "**/LICENSE": true,
+        "cqhttp": true,
+        "requirements.txt": true,
+    }
+}

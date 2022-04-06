@@ -7,11 +7,14 @@ import json
 from saaya.plugin_manager import plugin_manager
 from saaya.logger import logger
 from saaya import config
+from saaya.utils import bot_store, get
+import time
 
 
 class Bot:
     def __init__(self):
         logger.info('Bot initialized.')
+        self.cached_plugins = []
 
     def loop(self):
         logger.info("start Loop!")
@@ -39,18 +42,37 @@ class Bot:
             "u") else None
         await plugin_manager.broadcast(event)
 
-    def register_plugins(self, plugins: list):
+    async def register_plugins(self, plugins: list=[]):
+        if self.cached_plugins:
+            plugins = self.cached_plugins
+            
         for plugin in plugins:
             logger.info(f'Loading plugin: {plugin}')
             try:
                 __import__(plugin)
             except Exception as e:
                 logger.error(e)
+        
+        self.cached_plugins = plugins
 
-        # 处理 OnLoad
-        for func in plugin_manager.plugins['OnLoad']:
+    def wait4online(self):
+        while True:
+            # https://docs.go-cqhttp.org/api/#获取状态
             try:
-                logger.debug(f'Calling OnLoad func from {func}')
-                func(self)
-            except Exception as e:
-                logger.error(e)
+                logger.debug("waiting for online...")
+                resp = get("/get_status").json()
+                if resp["data"]["online"]:
+                    return True
+            except:
+                logger.debug("sleeping...")
+                time.sleep(0.5)
+
+
+    async def boot_hook(self):
+        # boot 
+        asyncio.gather(
+            *[func() for func in plugin_manager.plugins['Boot']]
+        )
+
+    def store_bot(self):
+        bot_store.bot = self

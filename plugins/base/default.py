@@ -1,6 +1,10 @@
 from saaya.plugin_manager import plugin_manager as PM
 from saaya.event import Message
 from saaya.utils import config_mg, re_filter
+from saaya.action import Message_action
+from saaya.config import config_mg
+from saaya.bot import Bot
+from saaya.utils import get_bot
 
 @PM.reg_event('message.group.admin')
 @re_filter("^admin$")
@@ -39,4 +43,14 @@ async def op_admin(event: Message):
 @re_filter("^reply$")
 async def reply_me(event: Message):
     event.back("just replied",True)
+
+@PM.reg_event("Boot")
+async def hello():
+    Message_action(True, config_mg.master, "hello").send()
+
+@PM.reg_event("message.private.admin.master")
+@re_filter("^reload$")
+async def reload(event):
+    bot = get_bot()
+    await bot.register_plugins()
 
