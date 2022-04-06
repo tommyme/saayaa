@@ -18,7 +18,6 @@ async def ping(event: Message):
     event.back("pong")
 
 
-
 @PM.reg_event('message.private.admin.master')
 @re_filter("^(get|add|rm)\ admin")
 async def op_admin(event: Message):
@@ -53,4 +52,5 @@ async def hello():
 async def reload(event):
     bot = get_bot()
     await bot.register_plugins()
+    event.back("reloaded")
 

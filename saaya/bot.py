@@ -9,12 +9,15 @@ from saaya.logger import logger
 from saaya import config
 from saaya.utils import bot_store, get
 import time
+import importlib
 
 
 class Bot:
     def __init__(self):
         logger.info('Bot initialized.')
-        self.cached_plugins = []
+        # self.cached_plugins = []
+        self.loaded_modules = []
+        self.plugins_loaded = False
 
     def loop(self):
         logger.info("start Loop!")
@@ -43,17 +46,20 @@ class Bot:
         await plugin_manager.broadcast(event)
 
     async def register_plugins(self, plugins: list=[]):
-        if self.cached_plugins:
-            plugins = self.cached_plugins
-            
-        for plugin in plugins:
-            logger.info(f'Loading plugin: {plugin}')
-            try:
-                __import__(plugin)
-            except Exception as e:
-                logger.error(e)
+        plugin_manager.plugins = ddict(list) # clear plugins
+        if self.plugins_loaded: # reload plugins
+            logger.info(f'reLoading plugins...')
+            for i in self.loaded_modules:
+                importlib.reload(i)
+        else:   # load plugins
+            for plugin in plugins:
+                logger.info(f'Loading plugin: {plugin}')
+                try:
+                    self.loaded_modules.append(importlib.import_module(plugin))
+                except Exception as e:
+                    logger.error(e)
         
-        self.cached_plugins = plugins
+        self.plugins_loaded = True
 
     def wait4online(self):
         while True:

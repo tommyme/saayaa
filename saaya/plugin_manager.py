@@ -8,9 +8,7 @@ import asyncio
 
 class Base_manager:
     def __init__(self):
-        self.plugins = ddict(list, {
-            "Boot": [],
-        })
+        self.plugins = ddict(list)
         # 这里一般使用'指纹'来添加事件类型
         # 你也可以手动添加事件类型，比如'Onload'
         self.strip = lambda x : x[:x.rfind('.')]
@@ -24,7 +22,6 @@ class Base_manager:
             fps.append(fp)
             fp = self.strip(fp)
         return fps
-
 
     async def broadcast(self, event: Event):
         """
@@ -44,10 +41,6 @@ class Base_manager:
             logger.debug(f'Registering {func} on {fingerprint}')
             self.plugins[fingerprint].append(func)
         return plugin
-    
-    
-    # def reg_boot_event(self, func):
-    #     self.boot_plugins["Boot"].append(func)
 
 
 plugin_manager = Base_manager()
