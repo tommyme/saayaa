@@ -2,10 +2,24 @@ version: "3"
 
 services:
   saaya:
+    container_name: saaya
     build: .
-    ports:
-      - 5700:5700
     volumes:
       - ./:/app
     working_dir: /app
     command: python3 main.py
+    
+  go-cqhttp:
+    container_name: go-cqhttp
+    image: ghcr.io/mrs4s/go-cqhttp:master
+    ports: 
+      - 5700:5700
+    volumes:
+      - ./cqhttp:/data
+  ubt:
+    volumes:
+      - ./tmp:/var/lib/apt/lists
+    container_name: ubt
+    image: ubuntu
+    stdin_open: true
+    tty: true

@@ -30,11 +30,11 @@ class Config_manager:
 
 config_mg = Config_manager()
 
-ws_addr = "0.0.0.0"
+ws_addr = "saaya"   # 用于接受go-cqhttp发出来的信息
 ws_port = 5701
 port = 5700
-addr = "localhost"
-base_url = f"http://{addr}:{port}"
+addr = "go-cqhttp"      # go-cqhttp容器的5700端口映射出去了
+base_url = f"http://{addr}:{port}"      # get函数请求的地址, 最终会到cqhttp的http服务商
 
 # class Info:
 #     def __init__(self) -> None:

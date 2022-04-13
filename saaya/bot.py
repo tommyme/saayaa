@@ -22,9 +22,13 @@ class Bot:
     def loop(self):
         logger.info("start Loop!")
 
-        async def getMsg(websocket, path):
-            while 1:
-                msg = await websocket.recv()
+        # async def getMsg(websocket, path):
+        #     while 1:
+        #         msg = await websocket.recv()
+        #         await self.processor(msg)
+        
+        async def getMsg(websocket):
+            async for msg in websocket:
                 await self.processor(msg)
 
         async def main():
