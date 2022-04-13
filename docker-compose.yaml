@@ -16,10 +16,3 @@ services:
       - 5700:5700
     volumes:
       - ./cqhttp:/data
-  ubt:
-    volumes:
-      - ./tmp:/var/lib/apt/lists
-    container_name: ubt
-    image: ubuntu
-    stdin_open: true
-    tty: true
