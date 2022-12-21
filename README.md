@@ -22,6 +22,12 @@ saayaa基于[go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 
 go-cqhttp有二维码登录功能，大大降低了登录难度。
 
+### go-cqhttp usage
+使用二维码登录时 手机上面的qq和go-cqhttp需要在同一网络下
+so, when logging in, you can run cqhttp on your macbook and dump the cqhttp folder, then upload the folder to the cloud server.
+
+alternatively, you can use 网页滑条 method, I don't like that.
+
 ### TODO_LIST
 
 - [x] logger（彩色）
